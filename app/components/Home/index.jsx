@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {readDir} from '../../utils/FileUtils';
+import {readDir, FilterContent} from '../../utils/FileUtils';
 
 // main HomePage class
 class Listing extends Component {
@@ -21,7 +21,14 @@ class Listing extends Component {
 	updateFiles = (path) => {
 		this._readDir(path, (files) => {
 			if(files && files.length) {
-				this.props.updateFiles(files)
+				FilterContent(files).then(values => {
+					let filteredFiles = values.filter((file) => {
+						return file.isDirectory || file.isImage
+					}).map((file) => {
+						return file;
+					})
+					this.props.updateFiles(filteredFiles)
+				})
 			}
 		});
 	}
@@ -39,7 +46,7 @@ class Listing extends Component {
 
 	renderFiles = (files) => {
 		return files.map((file, index) => {
-			return <p key={index}> {file} </p>
+			return <p key={index} onClick={file.isDirectory && (() => this.props.updatePath(file.file.path))}> {file.file.filename} </p>
 		})
 	}
 

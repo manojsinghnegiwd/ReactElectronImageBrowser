@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import TextField from 'material-ui/TextField';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
+import AutoComplete from 'material-ui/AutoComplete';
 import OnEvent from 'react-onevent';
+
+import {checkIfDir} from '../../utils/FileUtils'
 
 injectTapEventPlugin(); // to support onTouchTap
 
@@ -11,7 +14,8 @@ class Header extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			currentPath: props.mainStore.currentPath
+			currentPath: props.mainStore.currentPath,
+			dataSource: []
 		}
 	}
 
@@ -19,10 +23,6 @@ class Header extends Component {
 		if(nextProps.mainStore.currentPath != this.state.currentPath) {
 			this.changePath(nextProps.mainStore.currentPath);
 		}
-	}
-
-	handlePathChange = (e) => {
-		this.changePath(e.target.value);
 	}
 
 	changePath = (path) => {
@@ -42,11 +42,11 @@ class Header extends Component {
 				<Toolbar>
 					<ToolbarGroup>
 						<OnEvent enter={this.props.updatePath}>
-							<TextField
-								hintText="Browse"
-								fullWidth={true}
-								value={currentPath}
-								onChange={this.handlePathChange}
+							<AutoComplete
+								hintText="Type anything"
+								dataSource={this.state.dataSource}
+								searchText={currentPath}
+								onUpdateInput={e => this.changePath(e)}
 								onBlur={this.updatePath}
 							/>
 						</OnEvent>
