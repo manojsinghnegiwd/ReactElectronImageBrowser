@@ -13,11 +13,11 @@ const isDirOrImage = (file) => {
 					rej(err)
 
 				let isDirectory = stat.isDirectory();
-
+				let isImage = !isDirectory && checkIfImage(file.filename.substr(file.filename.lastIndexOf('.') + 1));
 				res({
 					file,
 					isDirectory,
-					isImage: !isDirectory && checkIfImage(file.filename.substr(file.filename.lastIndexOf('.') + 1))
+					isImage
 				})
 			})
 		}
@@ -52,8 +52,18 @@ const readDir = (dirSrc) => {
 	)
 }
 
+const calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) => {
+
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+    return { width: srcWidth*ratio, height: srcHeight*ratio };
+
+}
+
+
 export {
 	readDir,
 	checkIfImage,
-	FilterContent
+	FilterContent,
+	calculateAspectRatioFit
 }

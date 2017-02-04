@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {readDir, FilterContent} from '../../utils/FileUtils';
+import ImagePreview from '../Image';
 import Paper from 'material-ui/Paper';
+var Masonry = require('react-masonry-component');
 
 const style = {
   height: 100,
@@ -57,16 +59,14 @@ class Listing extends Component {
 	renderFiles = (files) => {
 		return files.map((file, index) => {
 			return (
-				<div>
+				<div key={index} style={{float: 'left', width: '25%'}}>
 					{file.isDirectory ? 
-						<Paper key={index} onClick={() => this.props.updatePath(file.file.path)} style={style} zDepth={1}>
+						<Paper onClick={() => this.props.updatePath(file.file.path)} style={style} zDepth={1}>
 							<div>
 								{file.file.filename}
 							</div>
 						</Paper>
-					: 	<Paper key={index} style={style} zDepth={1}>
-							<img style={{width:100}} src={file.file.path}  />
-						</Paper>
+					: 	<ImagePreview file={file.file} />
 					}
 				</div>
 			)
@@ -77,7 +77,12 @@ class Listing extends Component {
 		const {files, currentPath} = this.props.mainStore;
 		return (
 			<div>
-				{this.renderFiles(files)}
+				<Masonry
+	                className={'my-gallery-class'}
+	                disableImagesLoaded={false}
+	                updateOnEachImageLoad={false}>
+					{this.renderFiles(files)}
+	            </Masonry>
 			</div>
 		)
 	}
