@@ -1,0 +1,2 @@
+export const UPDATE_FILES = "UPDATE_FILES";
+export const UPDATE_CURRENT_PATH = "UPDATE_CURRENT_PATH";
