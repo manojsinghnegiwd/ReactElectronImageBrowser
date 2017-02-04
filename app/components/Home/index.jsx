@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
 import {readDir, FilterContent} from '../../utils/FileUtils';
+import Paper from 'material-ui/Paper';
+
+const style = {
+  height: 100,
+  width: 100,
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block',
+};
+
 
 // main HomePage class
 class Listing extends Component {
@@ -46,7 +56,20 @@ class Listing extends Component {
 
 	renderFiles = (files) => {
 		return files.map((file, index) => {
-			return <p key={index} onClick={file.isDirectory && (() => this.props.updatePath(file.file.path))}> {file.file.filename} </p>
+			return (
+				<div>
+					{file.isDirectory ? 
+						<Paper key={index} onClick={() => this.props.updatePath(file.file.path)} style={style} zDepth={1}>
+							<div>
+								{file.file.filename}
+							</div>
+						</Paper>
+					: 	<Paper key={index} style={style} zDepth={1}>
+							<img style={{width:100}} src={file.file.path}  />
+						</Paper>
+					}
+				</div>
+			)
 		})
 	}
 
