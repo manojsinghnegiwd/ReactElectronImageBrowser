@@ -8,12 +8,33 @@ class Listing extends Component {
 		super(props);
 	}
 
+	componentWillReceiveProps = (nextProps) => {
+		if(nextProps.mainStore.currentPath != this.props.mainStore.currentPath) {
+			this.updateFiles(nextProps.mainStore.currentPath);
+		}
+	}
+
 	componentDidMount () {
-		readDir('/home/manoj/Documents')
-			.then((files) => {
-				console.log(files)
-				this.props.updateFiles(files);
-			})
+		this.updateFiles(this.props.mainStore.currentPath);	
+	}
+
+	updateFiles = (path) => {
+		this._readDir(path, (files) => {
+			if(files && files.length) {
+				this.props.updateFiles(files)
+			}
+		});
+	}
+
+	_readDir = (path, cb) => {
+		if(path) {
+			readDir(path)
+				.then((files) => {
+					cb(files);
+				})
+		} else {
+			cb([]);
+		}
 	}
 
 	renderFiles = (files) => {

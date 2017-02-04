@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
 		case actionTypes.UPDATE_FILES:
 			return {...state, files: action.payload.files}
 		case actionTypes.UPDATE_CURRENT_PATH:
-			return {...state, currentPath: action.payload.files.currentPath}
+			return {...state, currentPath: action.payload.path}
 		default:
 			return {...state}
 	}

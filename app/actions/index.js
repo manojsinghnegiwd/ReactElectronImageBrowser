@@ -11,3 +11,14 @@ export function updateFiles(files) {
     });
   };
 }
+
+export function updatePath(path) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.UPDATE_CURRENT_PATH,
+      payload: {
+        path
+      }
+    });
+  };
+}
