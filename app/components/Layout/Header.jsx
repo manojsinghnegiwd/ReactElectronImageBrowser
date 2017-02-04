@@ -4,8 +4,13 @@ import TextField from 'material-ui/TextField';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import AutoComplete from 'material-ui/AutoComplete';
 import OnEvent from 'react-onevent';
+import Drawer from 'material-ui/Drawer';
+import FlatButton from 'material-ui/FlatButton';
+import FolderIcon from 'material-ui/svg-icons/file/folder';
+import {List, ListItem} from 'material-ui/List';
 
 import {checkIfDir} from '../../utils/FileUtils'
+
 
 injectTapEventPlugin(); // to support onTouchTap
 
@@ -15,7 +20,8 @@ class Header extends Component {
 		super(props);
 		this.state = {
 			currentPath: props.mainStore.currentPath,
-			dataSource: []
+			dataSource: [],
+			open: false
 		}
 	}
 
@@ -35,11 +41,27 @@ class Header extends Component {
 		this.props.updatePath(e.target.value);
 	}
 
+	toggleDrawer = () => {
+		this.setState((prevState) => ({
+			open: !prevState.open
+		}))
+	}
+
+	renderDirs = (dirs) => {
+		return dirs.map((dir, index) => {
+			return <ListItem onClick={() => this.props.updatePath(dir.file.path)} key={index} primaryText={dir.file.filename} leftIcon={<FolderIcon />} />
+		})
+	}
+
 	render(){
-		const {currentPath} = this.state;
+		const {currentPath, open} = this.state;
+		const {directories} = this.props.mainStore;
 		return (
 			<div>
 				<Toolbar>
+					<ToolbarGroup>
+						<FlatButton label="Files" onClick={this.toggleDrawer} />
+					</ToolbarGroup>
 					<ToolbarGroup>
 						<OnEvent enter={this.props.updatePath}>
 							<AutoComplete
@@ -52,6 +74,11 @@ class Header extends Component {
 						</OnEvent>
 					</ToolbarGroup>
 				</Toolbar>
+				<Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={open}>
+					<List>
+						{this.renderDirs(directories)}
+					</List>
+				</Drawer>
 			</div>
 		)
 	}

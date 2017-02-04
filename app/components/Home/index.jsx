@@ -33,13 +33,19 @@ class Listing extends Component {
 	updateFiles = (path) => {
 		this._readDir(path, (files) => {
 			if(files && files.length) {
+				let images = [], directories = [];
 				FilterContent(files).then(values => {
 					let filteredFiles = values.filter((file) => {
 						return file.isDirectory || file.isImage
 					}).map((file) => {
+						if(file.isDirectory) {
+							directories.push(file);
+						} else {
+							images.push(file);
+						}
 						return file;
 					})
-					this.props.updateFiles(filteredFiles)
+					this.props.updateFiles(images, directories)
 				})
 			}
 		});
@@ -56,32 +62,28 @@ class Listing extends Component {
 		}
 	}
 
-	renderFiles = (files) => {
+	renderImages = (files) => {
 		return files.map((file, index) => {
 			return (
-				<div key={index} style={{float: 'left', width: '25%'}}>
-					{file.isDirectory ? 
-						<Paper onClick={() => this.props.updatePath(file.file.path)} style={style} zDepth={1}>
-							<div>
-								{file.file.filename}
-							</div>
-						</Paper>
-					: 	<ImagePreview file={file.file} />
-					}
+				<div key={index} className="item">
+					<ImagePreview file={file.file} />
 				</div>
 			)
 		})
 	}
 
 	render(){
-		const {files, currentPath} = this.props.mainStore;
+		const {images} = this.props.mainStore;
 		return (
 			<div>
 				<Masonry
 	                className={'my-gallery-class'}
 	                disableImagesLoaded={false}
-	                updateOnEachImageLoad={false}>
-					{this.renderFiles(files)}
+	                updateOnEachImageLoad={false}
+	                options={{
+	                	gutter: 10
+	                }}>
+					{this.renderImages(images)}
 	            </Masonry>
 			</div>
 		)

@@ -8,7 +8,7 @@ export default class ImagePreview extends Component {
 	render () {
 		const {file} = this.props;
 		return (
-			<img style={{margin: 20, width: '100%'}} src={file.path}  />
+			<img style={{width: '100%'}} src={file.path}  />
 		)
 	}
 }

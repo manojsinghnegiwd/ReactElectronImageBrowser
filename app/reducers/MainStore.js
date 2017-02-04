@@ -1,9 +1,8 @@
 import * as actionTypes from '../constants/actionTypes.js';
 
 const initialState = {
-	files: [],
-	// Directories: [],
-	// Images: [],
+	directories: [],
+	images: [],
 	currentPath: '',
 	pathHistory: []
 }

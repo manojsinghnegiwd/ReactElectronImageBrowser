@@ -1,12 +1,12 @@
 // @flow
 import * as actionTypes from '../constants/actionTypes.js';
 
-export function updateFiles(files) {
+export function updateFiles(images, directories) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.UPDATE_FILES,
       payload: {
-        files
+        images, directories
       }
     });
   };

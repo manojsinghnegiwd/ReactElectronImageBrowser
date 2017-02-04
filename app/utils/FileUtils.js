@@ -42,6 +42,7 @@ const readDir = (dirSrc) => {
 					rej(err);
 
 				res(files.map((file) => {
+					isDirOrImage
 					return {
 						filename: file,
 						path: `${dirSrc}/${file}`
