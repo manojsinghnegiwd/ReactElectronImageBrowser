@@ -5,10 +5,15 @@ export default class ImagePreview extends Component {
 		super(props);
 	}
 
+	_onClick = () => {
+		this.props.updateImage(this.props.file.path);
+	}
+
+
 	render () {
 		const {file} = this.props;
 		return (
-			<img style={{width: '100%'}} src={file.path}  />
+			<img onClick={this._onClick} style={{width: '100%'}} src={file.path}  />
 		)
 	}
 }

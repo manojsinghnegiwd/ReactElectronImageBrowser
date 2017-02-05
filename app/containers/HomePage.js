@@ -6,7 +6,7 @@ export default class HomePage extends Component {
   render() {
   	let {images} = this.props.mainStore;
     return (
-      <Home images={images} />
+      <Home images={images} emptyImage={this.props.emptyImage} updateImage={this.props.updateImage} onImageClick={this.props.updateImage} />
     );
   }
 }

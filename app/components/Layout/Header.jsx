@@ -7,6 +7,7 @@ import Drawer from 'material-ui/Drawer';
 import FlatButton from 'material-ui/FlatButton';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
 import {List, ListItem} from 'material-ui/List';
+import ImageDialog from '../ImageDialog';
 
 
 injectTapEventPlugin(); // to support onTouchTap
@@ -18,13 +19,18 @@ class Header extends Component {
 		this.state = {
 			currentPath: props.mainStore.currentPath,
 			dataSource: [],
-			open: false
+			open: false,
+			openDialog: false
 		}
 	}
 
 	componentWillReceiveProps (nextProps) {
 		if(nextProps.mainStore.currentPath != this.state.currentPath) {
 			this.changePath(nextProps.mainStore.currentPath);
+		}
+
+		if(nextProps.mainStore.currentImage && nextProps.mainStore.currentImage.path != '' && nextProps.mainStore.currentImage.path != this.props.mainStore.currentImage.path) {
+			this.openDialog();
 		}
 	}
 
@@ -44,6 +50,18 @@ class Header extends Component {
 		}))
 	}
 
+	closeDialog = () => {
+		this.setState({
+			openDialog: false
+		})
+	}
+
+	openDialog = () => {
+		this.setState({
+			openDialog: true
+		})
+	}
+
 	renderDirs = (dirs) => {
 		return dirs.map((dir, index) => {
 			return <ListItem onClick={() => this.props.updatePath(dir.path)} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
@@ -51,8 +69,8 @@ class Header extends Component {
 	}
 
 	render(){
-		const {currentPath, open} = this.state;
-		const {directories} = this.props.mainStore;
+		const {currentPath, open, openDialog} = this.state;
+		const {directories, currentImage} = this.props.mainStore;
 		return (
 			<div>
 				<Toolbar>
@@ -76,6 +94,7 @@ class Header extends Component {
 						{this.renderDirs(directories)}
 					</List>
 				</Drawer>
+				<ImageDialog onClose={this.closeDialog} open={openDialog} image={currentImage} />
 			</div>
 		)
 	}

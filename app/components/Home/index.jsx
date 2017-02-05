@@ -14,7 +14,7 @@ class Listing extends Component {
 		return files.map((file, index) => {
 			return (
 				<div key={index} className="item">
-					<ImagePreview file={file} />
+					<ImagePreview emptyImage={this.props.emptyImage} updateImage={this.props.updateImage} file={file} />
 				</div>
 			)
 		})

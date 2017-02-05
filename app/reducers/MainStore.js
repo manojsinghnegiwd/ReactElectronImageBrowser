@@ -4,6 +4,7 @@ const initialState = {
 	directories: [],
 	images: [],
 	currentPath: '',
+	currentImage: {},
 	pathHistory: []
 }
 
@@ -13,6 +14,8 @@ export default (state = initialState, action) => {
 			return {...state, ...action.payload}
 		case actionTypes.UPDATE_CURRENT_PATH:
 			return {...state, currentPath: action.payload.path}
+		case actionTypes.UPDATE_CURRENT_IMAGE:
+			return {...state, currentImage: action.payload.image}
 		default:
 			return {...state}
 	}
