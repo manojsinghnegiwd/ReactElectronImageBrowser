@@ -21,7 +21,7 @@ export default class ImagePreview extends Component {
 		return (
 			<div>
 				{ loading ? <CircularProgress /> : null}
-				<img onLoad={e => this.setState({loading: false})} onClick={this._onClick} style={{display: (loading ? 'none' : 'block'),width: '100%'}} src={file.path}  />
+				<img onLoad={e => this.setState({loading: false})} onClick={this._onClick} style={{display: (loading ? 'none' : 'block'),width: '100%', cursor: 'pointer'}} src={file.path}  />
 			</div>
 		)
 	}
