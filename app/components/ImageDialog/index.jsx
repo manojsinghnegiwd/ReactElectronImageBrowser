@@ -1,6 +1,54 @@
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import {calculateAspectRatioFit} from '../../utils/FileUtils'
+
+class BigImage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			width: 0,
+			height: 0
+		}
+	}
+
+	componentWillReceiveProps(nextProps){
+		if(nextProps.image.path != '' && nextProps.image.path !== this.props.image.path) {
+			this.updateDim(nextProps.image.path)
+		}
+	}
+
+	componentDidMount () {
+		this.updateDim(this.props.image.path);
+	}
+
+	updateDim = (src) => {
+		let img = new window.Image();
+		let _this = this;
+
+		img.onload = function () {
+
+			let {width, height} = this;
+
+			let greater_side = width > height ? width : height;
+
+			let dimension = greater_side > 400 ? 720 : 400;
+
+			let new_dimensions = calculateAspectRatioFit(width, height, dimension, dimension);
+
+			_this.setState({...new_dimensions})
+		}
+
+		img.src = src;
+	}
+
+	render() {
+		const {image} = this.props;
+		return (
+			<img {...this.state} src={image.path}/>
+		)
+	}
+}
 
 export default class ImageDialog extends Component {
 	constructor(props) {
@@ -18,12 +66,14 @@ export default class ImageDialog extends Component {
 		const {image, open} = this.props;
 		return (
 			<Dialog
+				className="dialog-container"
 				title={image.filename}
 				modal={false}
 				open={open}
 				onRequestClose={this.handleClose}
+				autoScrollBodyContent={true}
 				>
-			<img src={image.path}/>
+				<BigImage image={image} />
 			</Dialog>
 		)
 	}
