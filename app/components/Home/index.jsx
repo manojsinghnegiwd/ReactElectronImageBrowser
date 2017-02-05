@@ -23,7 +23,7 @@ class Listing extends Component {
 	render(){
 		const {images} = this.props;
 		return (
-			<div>
+			<div className="listing">
 				<Masonry
 	                className={'my-gallery-class'}
 	                disableImagesLoaded={false}
