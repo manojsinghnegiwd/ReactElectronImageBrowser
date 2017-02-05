@@ -22,3 +22,7 @@ export function updatePath(path) {
     });
   };
 }
+
+export function emptyFiles() {
+  return updateFiles([],[]);
+}

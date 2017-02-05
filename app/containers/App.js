@@ -17,6 +17,7 @@ class App extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.mainStore.currentPath != this.props.mainStore.currentPath) {
+      this.props.emptyFiles();
       this.updateFiles(nextProps.mainStore.currentPath);
     }
   }
