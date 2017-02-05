@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import Header from '../components/Layout/Header';
 import MuitThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -61,7 +60,6 @@ class App extends Component {
     return (
       <MuitThemeProvider>
         <div>
-          <Header {...this.props}/>
           {new_childrens}
         </div>
       </MuitThemeProvider>

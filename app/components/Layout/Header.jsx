@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import AutoComplete from 'material-ui/AutoComplete';
+import TextField from 'material-ui/TextField';
 import OnEvent from 'react-onevent';
 import Drawer from 'material-ui/Drawer';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
+import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 import {List, ListItem} from 'material-ui/List';
 import ImageDialog from '../ImageDialog';
+import {updateWindowTitle} from '../../utils/FileUtils';
+import os from 'os';
 
 
 injectTapEventPlugin(); // to support onTouchTap
@@ -18,8 +23,6 @@ class Header extends Component {
 		super(props);
 		this.state = {
 			currentPath: props.mainStore.currentPath,
-			dataSource: [],
-			open: false,
 			openDialog: false
 		}
 	}
@@ -34,6 +37,12 @@ class Header extends Component {
 		}
 	}
 
+	handleChangePath = (e) => {
+		this.setState({
+			currentPath: e.target.value
+		});
+	}
+
 	changePath = (path) => {
 		this.setState({
 			currentPath: path
@@ -42,12 +51,6 @@ class Header extends Component {
 
 	updatePath = (e) => {
 		this.props.updatePath(e.target.value);
-	}
-
-	toggleDrawer = () => {
-		this.setState((prevState) => ({
-			open: !prevState.open
-		}))
 	}
 
 	closeDialog = () => {
@@ -73,32 +76,39 @@ class Header extends Component {
 
 	renderDirs = (dirs) => {
 		return dirs.map((dir, index) => {
-			return <ListItem onClick={() => this.props.updatePath(dir.path)} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
+			return <ListItem onClick={() => {this.props.updatePath(dir.path); updateWindowTitle(dir.filename)}} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
 		})
 	}
 
 	render(){
 		const {currentPath, open, openDialog} = this.state;
 		const {directories, currentImage} = this.props.mainStore;
+		const buttonStyle = {
+			marginLeft: 5,
+			marginRight: 5,
+			cursor: 'pointer'
+		}
 		return (
 			<div className="header">
 				<Toolbar>
 					<ToolbarGroup>
-						<FlatButton label="Files" onClick={this.toggleDrawer} />
-					</ToolbarGroup>
-					<ToolbarGroup>
+						<ArrowBack style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
+						<HomeIcon style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
+						<ArrowForward style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
 						<OnEvent enter={this.props.updatePath}>
-							<AutoComplete
+							<TextField
+								style={{
+									marginLeft: 40
+								}}
 								hintText="Type anything"
-								dataSource={this.state.dataSource}
-								searchText={currentPath}
-								onUpdateInput={e => this.changePath(e)}
+								value={currentPath}
+								onChange={e => this.handleChangePath(e)}
 								onBlur={this.updatePath}
 							/>
 						</OnEvent>
 					</ToolbarGroup>
 				</Toolbar>
-				<Drawer docked={false} onRequestChange={(open) => this.setState({open})} open={open}>
+				<Drawer containerClassName="drawer-container" docked={true} open={open}>
 					<List>
 						{this.renderDirs(directories)}
 					</List>

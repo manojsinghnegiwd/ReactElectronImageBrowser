@@ -60,6 +60,11 @@ const readDir = (dirSrc) => {
 	)
 }
 
+const updateWindowTitle = (title) => {
+	let PageTitle = document.querySelectorAll('title')
+	PageTitle[0].innerHTML = title;
+}
+
 const calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) => {
 
     var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
@@ -73,5 +78,6 @@ export {
 	readDir,
 	checkIfImage,
 	FilterContent,
-	calculateAspectRatioFit
+	calculateAspectRatioFit,
+	updateWindowTitle
 }

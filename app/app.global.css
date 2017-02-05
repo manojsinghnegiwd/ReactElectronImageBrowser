@@ -30,6 +30,16 @@
     z-index: 1;
 }
 
+.drawer-container {
+	width: 20% !important;
+}
+
+.main-container {
+	width: 80%;
+	float: right;
+	display: inline-block;
+}
+
 body {
 	margin: 0px;
 }
