@@ -46,7 +46,7 @@ class Header extends Component {
 
 	renderDirs = (dirs) => {
 		return dirs.map((dir, index) => {
-			return <ListItem onClick={() => this.props.updatePath(dir.file.path)} key={index} primaryText={dir.file.filename} leftIcon={<FolderIcon />} />
+			return <ListItem onClick={() => this.props.updatePath(dir.path)} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
 		})
 	}
 

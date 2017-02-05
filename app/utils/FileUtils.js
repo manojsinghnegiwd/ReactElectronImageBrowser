@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 const checkIfImage = (ext) => {
 	ext = ext.toLowerCase(ext);
@@ -8,18 +9,23 @@ const checkIfImage = (ext) => {
 const isDirOrImage = (file) => {
 	return new Promise (
 		(res, rej) => {
-			fs.stat(file.path, (err, stat) => {
-				if(err)
-					rej(err)
+			if(!file.isImage) {
+				fs.stat(file.path, (err, stat) => {
+					if(err)
+						rej(err)
 
-				let isDirectory = stat.isDirectory();
-				let isImage = !isDirectory && checkIfImage(file.filename.substr(file.filename.lastIndexOf('.') + 1));
-				res({
-					file,
-					isDirectory,
-					isImage
+					let isDirectory = stat.isDirectory();
+					res({
+						...file,
+						isDirectory
+					})
 				})
-			})
+			} else {
+				res({
+					...file,
+					isDirectory: false
+				})
+			}
 		}
 	)
 }
@@ -45,7 +51,8 @@ const readDir = (dirSrc) => {
 					isDirOrImage
 					return {
 						filename: file,
-						path: `${dirSrc}/${file}`
+						path: path.join(dirSrc, file),
+						isImage: checkIfImage(file.substr(file.lastIndexOf('.') + 1))
 					}
 				}))
 			})
