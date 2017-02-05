@@ -5,7 +5,7 @@ const initialState = {
 	images: [],
 	currentPath: '',
 	currentImage: {},
-	pathHistory: []
+	dir_history: []
 }
 
 export default (state = initialState, action) => {
@@ -16,6 +16,8 @@ export default (state = initialState, action) => {
 			return {...state, currentPath: action.payload.path}
 		case actionTypes.UPDATE_CURRENT_IMAGE:
 			return {...state, currentImage: action.payload.image}
+		case actionTypes.UPDATE_HISTORY:
+			return {...state, dir_history: action.payload.history}
 		default:
 			return {...state}
 	}

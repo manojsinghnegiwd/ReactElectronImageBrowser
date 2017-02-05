@@ -74,6 +74,22 @@ class Header extends Component {
 		this.props.updateImage(path, filename, index, lastIndex, firstIndex);
 	}
 
+	goForward = () => {
+		let {currentPath, dir_history} = this.props.mainStore;
+		let nextDir = dir_history.lastIndexOf(currentPath) + 1; 
+		if(dir_history[nextDir]){
+			this.props.updatePath(dir_history[nextDir]);
+		}
+	}
+
+	goBack = () => {
+		let {currentPath, dir_history} = this.props.mainStore;
+		let prevDir = dir_history.lastIndexOf(currentPath) - 1;
+		if(dir_history[prevDir]){
+			this.props.updatePath(dir_history[prevDir]);
+		}
+	}
+
 	renderDirs = (dirs) => {
 		return dirs.map((dir, index) => {
 			return <ListItem onClick={() => {this.props.updatePath(dir.path); updateWindowTitle(dir.filename)}} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
@@ -92,9 +108,9 @@ class Header extends Component {
 			<div className="header">
 				<Toolbar>
 					<ToolbarGroup>
-						<ArrowBack style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
+						<ArrowBack style={buttonStyle} onClick={this.goBack} />
 						<HomeIcon style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
-						<ArrowForward style={buttonStyle} onClick={() => this.props.updatePath(os.homedir())} />
+						<ArrowForward style={buttonStyle} onClick={this.goForward} />
 						<OnEvent enter={this.props.updatePath}>
 							<TextField
 								style={{

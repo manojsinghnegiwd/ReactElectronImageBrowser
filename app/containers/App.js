@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import * as actions from '../actions';
 import os from 'os';
 
-import {readDir, FilterContent} from '../utils/FileUtils'
+import {readDir, FilterContent, pushInHistory} from '../utils/FileUtils'
 
 class App extends Component {
 
@@ -17,6 +17,7 @@ class App extends Component {
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.mainStore.currentPath != this.props.mainStore.currentPath) {
       this.props.emptyFiles();
+      this.props.updateDirHistory(pushInHistory(nextProps.mainStore.currentPath, this.props.mainStore.currentPath, this.props.mainStore.dir_history));
       this.updateFiles(nextProps.mainStore.currentPath);
     }
   }

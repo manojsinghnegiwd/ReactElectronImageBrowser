@@ -73,11 +73,28 @@ const calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) => {
 
 }
 
+const pushInHistory = (nextDir, currentDir, browser_history) => {
+
+	if(!nextDir) {
+		return;
+	}
+
+	let dir_index = browser_history.lastIndexOf(nextDir);
+	if(dir_index == -1){
+		if(currentDir == browser_history[browser_history.length - 2]) {
+			browser_history.splice(browser_history.length - 1, 1);
+		}
+		browser_history.push(nextDir);
+	}
+	return browser_history;
+}
+
 
 export {
 	readDir,
 	checkIfImage,
 	FilterContent,
 	calculateAspectRatioFit,
-	updateWindowTitle
+	updateWindowTitle,
+	pushInHistory
 }

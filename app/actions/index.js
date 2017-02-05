@@ -47,3 +47,14 @@ export function updateImage(path,filename,fileIndex,lastIndex,firstIndex) {
 export function emptyImage() {
   return updateImage('','',-1);
 }
+
+export function updateDirHistory(history) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.UPDATE_HISTORY,
+      payload: {
+        history
+      }
+    })
+  }
+}
