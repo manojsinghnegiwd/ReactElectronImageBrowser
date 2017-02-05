@@ -27,14 +27,17 @@ export function emptyFiles() {
   return updateFiles([],[]);
 }
 
-export function updateImage(path,filename) {
+export function updateImage(path,filename,fileIndex,lastIndex,firstIndex) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.UPDATE_CURRENT_IMAGE,
       payload: {
         image: {
           path,
-          filename
+          filename,
+          fileIndex,
+          lastIndex,
+          firstIndex
         }
       }
     })
@@ -42,5 +45,5 @@ export function updateImage(path,filename) {
 }
 
 export function emptyImage() {
-  return updateImage('','');
+  return updateImage('','',-1);
 }

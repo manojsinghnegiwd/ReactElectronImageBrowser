@@ -63,6 +63,14 @@ class Header extends Component {
 		})
 	}
 
+	updateImageByIndex = (index) => {
+		let {images} = this.props.mainStore;
+		let firstIndex = (index === 0);
+		let lastIndex = (index == images.length - 1);
+		let {path, filename} = images[index];
+		this.props.updateImage(path, filename, index, lastIndex, firstIndex);
+	}
+
 	renderDirs = (dirs) => {
 		return dirs.map((dir, index) => {
 			return <ListItem onClick={() => this.props.updatePath(dir.path)} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
@@ -95,7 +103,7 @@ class Header extends Component {
 						{this.renderDirs(directories)}
 					</List>
 				</Drawer>
-				<ImageDialog onClose={this.closeDialog} open={openDialog} image={currentImage} />
+				<ImageDialog onNavigation={this.updateImageByIndex} onClose={this.closeDialog} open={openDialog} image={currentImage} />
 			</div>
 		)
 	}

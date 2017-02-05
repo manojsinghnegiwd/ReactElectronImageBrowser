@@ -10,8 +10,8 @@ export default class ImagePreview extends Component {
 	}
 
 	_onClick = () => {
-		let {file} = this.props;
-		this.props.updateImage(file.path, file.filename);
+		let {file, lastIndex, firstIndex} = this.props;
+		this.props.updateImage(file.path, file.filename, this.props.fileIndex, lastIndex, firstIndex);
 	}
 
 

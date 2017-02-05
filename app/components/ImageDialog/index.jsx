@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {calculateAspectRatioFit} from '../../utils/FileUtils'
 
 class BigImage extends Component {
@@ -62,14 +64,35 @@ export default class ImageDialog extends Component {
 		this.props.onClose()
 	}
 
+	previousImage = () => {
+		this.props.onNavigation(this.props.image.fileIndex - 1);
+	}
+
+	nextImage = () => {
+		this.props.onNavigation(this.props.image.fileIndex + 1);
+	}
+
 	render () {
 		const {image, open} = this.props;
+		const {firstIndex, lastIndex} = image;
 		const actions = [
+	      <FlatButton
+	        primary={true}
+	        icon={<ArrowBack />}
+	        disabled={firstIndex}
+	        onTouchTap={this.previousImage}
+	      />,
+		  <FlatButton
+	        primary={true}
+	        icon={<ArrowForward />}
+	        disabled={lastIndex}
+	        onTouchTap={this.nextImage}
+	      />,
 	      <FlatButton
 	        label="Close"
 	        primary={true}
 	        onTouchTap={this.handleClose}
-	      />
+	      />,
 	    ];
 		return (
 			<Dialog
