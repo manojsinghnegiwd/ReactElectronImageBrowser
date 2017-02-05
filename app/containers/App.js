@@ -37,7 +37,7 @@ class App extends Component {
             }
             return file;
           })
-          this.props.updateFiles(images, directories)
+          this.props.updateFiles(images, directories);
         })
       }
     });

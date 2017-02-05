@@ -12,6 +12,7 @@ import HomeIcon from 'material-ui/svg-icons/action/home';
 import {List, ListItem} from 'material-ui/List';
 import ImageDialog from '../ImageDialog';
 import {updateWindowTitle} from '../../utils/FileUtils';
+import Subheader from 'material-ui/Subheader';
 import os from 'os';
 
 
@@ -91,6 +92,7 @@ class Header extends Component {
 	}
 
 	renderDirs = (dirs) => {
+		// else return
 		return dirs.map((dir, index) => {
 			return <ListItem onClick={() => {this.props.updatePath(dir.path); updateWindowTitle(dir.filename)}} key={index} primaryText={dir.filename} leftIcon={<FolderIcon />} />
 		})
@@ -126,6 +128,7 @@ class Header extends Component {
 				</Toolbar>
 				<Drawer containerClassName="drawer-container" docked={true} open={open}>
 					<List>
+						<Subheader>Folders List</Subheader>
 						{this.renderDirs(directories)}
 					</List>
 				</Drawer>

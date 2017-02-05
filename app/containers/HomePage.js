@@ -9,7 +9,7 @@ export default class HomePage extends Component {
     return (
     	<div className="main-container">
     		<Header {...this.props}/>
-			<Home images={images} emptyImage={this.props.emptyImage} updateImage={this.props.updateImage} onImageClick={this.props.updateImage} />
+			<Home images_msg={this.props.mainStore.images_msg} images={images} emptyImage={this.props.emptyImage} updateImage={this.props.updateImage} onImageClick={this.props.updateImage} />
 		</div>
     );
   }

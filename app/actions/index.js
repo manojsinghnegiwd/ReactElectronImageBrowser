@@ -7,7 +7,7 @@ export function updateFiles(images, directories) {
       type: actionTypes.UPDATE_FILES,
       payload: {
         images, directories
-      }
+      },
     });
   };
 }

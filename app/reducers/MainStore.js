@@ -5,7 +5,7 @@ const initialState = {
 	images: [],
 	currentPath: '',
 	currentImage: {},
-	dir_history: []
+	dir_history: [],
 }
 
 export default (state = initialState, action) => {

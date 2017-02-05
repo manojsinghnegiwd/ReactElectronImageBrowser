@@ -4,6 +4,8 @@
 	float: left;
 	width: 24%;
 	margin-bottom: 10px;
+	min-height: 100px;
+	text-align: center;
 }
 
 .listing {
