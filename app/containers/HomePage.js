@@ -4,8 +4,9 @@ import Home from '../components/Home/';
 
 export default class HomePage extends Component {
   render() {
+  	let {images} = this.props.mainStore;
     return (
-      <Home {...this.props} />
+      <Home images={images} />
     );
   }
 }

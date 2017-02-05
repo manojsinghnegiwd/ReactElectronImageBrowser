@@ -5,8 +5,53 @@ import MuitThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
+import os from 'os';
+
+import {readDir, FilterContent} from '../utils/FileUtils'
 
 class App extends Component {
+
+  componentDidMount () {
+    this.props.updatePath(os.homedir()); // set initial path
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.mainStore.currentPath != this.props.mainStore.currentPath) {
+      this.updateFiles(nextProps.mainStore.currentPath);
+    }
+  }
+
+  updateFiles = (path) => {
+    this._readDir(path, (files) => {
+      if(files && files.length) {
+        let images = [], directories = [];
+        FilterContent(files).then(values => {
+          let filteredFiles = values.filter((file) => {
+            return file.isDirectory || file.isImage
+          }).map((file) => {
+            if(file.isDirectory) {
+              directories.push(file);
+            } else {
+              images.push(file);
+            }
+            return file;
+          })
+          this.props.updateFiles(images, directories)
+        })
+      }
+    });
+  }
+
+  _readDir = (path, cb) => {
+    if(path) {
+      readDir(path)
+        .then((files) => {
+          cb(files);
+        })
+    } else {
+      cb([]);
+    }
+  }
 
   render() {
 

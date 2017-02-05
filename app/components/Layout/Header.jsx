@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import TextField from 'material-ui/TextField';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import AutoComplete from 'material-ui/AutoComplete';
 import OnEvent from 'react-onevent';
@@ -8,8 +7,6 @@ import Drawer from 'material-ui/Drawer';
 import FlatButton from 'material-ui/FlatButton';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
 import {List, ListItem} from 'material-ui/List';
-
-import {checkIfDir} from '../../utils/FileUtils'
 
 
 injectTapEventPlugin(); // to support onTouchTap
