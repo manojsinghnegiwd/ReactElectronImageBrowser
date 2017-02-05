@@ -27,7 +27,7 @@ class Listing extends Component {
 				<Masonry
 	                className={'my-gallery-class'}
 	                disableImagesLoaded={false}
-	                updateOnEachImageLoad={false}
+	                updateOnEachImageLoad={true}
 	                options={{
 	                	gutter: 10
 	                }}>

@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
 
 export default class ImagePreview extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			loading: true
+		}
 	}
 
 	_onClick = () => {
@@ -13,8 +17,12 @@ export default class ImagePreview extends Component {
 
 	render () {
 		const {file} = this.props;
+		const {loading} = this.state;
 		return (
-			<img onClick={this._onClick} style={{width: '100%'}} src={file.path}  />
+			<div>
+				{ loading ? <CircularProgress /> : null}
+				<img onLoad={e => this.setState({loading: false})} onClick={this._onClick} style={{display: (loading ? 'none' : 'block'),width: '100%'}} src={file.path}  />
+			</div>
 		)
 	}
 }

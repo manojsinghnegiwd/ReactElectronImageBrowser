@@ -51,6 +51,7 @@ class Header extends Component {
 	}
 
 	closeDialog = () => {
+		this.props.emptyImage();
 		this.setState({
 			openDialog: false
 		})
@@ -72,7 +73,7 @@ class Header extends Component {
 		const {currentPath, open, openDialog} = this.state;
 		const {directories, currentImage} = this.props.mainStore;
 		return (
-			<div>
+			<div className="header">
 				<Toolbar>
 					<ToolbarGroup>
 						<FlatButton label="Files" onClick={this.toggleDrawer} />

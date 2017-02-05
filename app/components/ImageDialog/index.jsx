@@ -45,7 +45,7 @@ class BigImage extends Component {
 	render() {
 		const {image} = this.props;
 		return (
-			<img {...this.state} src={image.path}/>
+			<img className="big-image" {...this.state} src={image.path}/>
 		)
 	}
 }
@@ -64,6 +64,13 @@ export default class ImageDialog extends Component {
 
 	render () {
 		const {image, open} = this.props;
+		const actions = [
+	      <FlatButton
+	        label="Close"
+	        primary={true}
+	        onTouchTap={this.handleClose}
+	      />
+	    ];
 		return (
 			<Dialog
 				className="dialog-container"
@@ -72,6 +79,7 @@ export default class ImageDialog extends Component {
 				open={open}
 				onRequestClose={this.handleClose}
 				autoScrollBodyContent={true}
+				actions={actions}
 				>
 				<BigImage image={image} />
 			</Dialog>
